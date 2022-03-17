@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        #app {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(235, 235, 235);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0px 2px 10px -2px rgba(0,0,0,.2);
+        }
+        .text {
+            margin-bottom: 1.25rem;
+            padding: .5rem;
+            outline: none;
+            font-size: 18px;
+            border: 2px solid rgba(50,50,50);
+            color: rgba(50,50,50);
+        }
+        .box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        p {
+            font-size: 24px;
+            color: white;
+            background-color: rgba(50,50,50);
+            text-align: center;
+            padding: .5rem 0;
+            border-radius: .25rem;
+        }
+        button {
+            font-size: 16px;
+            color: rgba(50,50,50);
+            border: 2px solid rgba(50,50,50);
+            background-color: transparent;
+            padding: .2rem 1rem;
+            border-radius: .25rem;
+            transition: .2s;
+        }
+        button:hover {
+            background-color: rgba(50,50,50);
+            color: white;
+        }
+        .text:disabled {
+            border-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="container">
+            <input class="text" type="text" placeholder="Enter Text" v-bind:disabled="!checked" v-model="message">
+            <div class="box">
+                <button v-on:click="show()">Click</button>
+                <div class="left-side">
+                    <input class="check" type="checkbox" v-model="checked" id="checkbox">
+                    <label for="checkbox">Checked</label>
+                </div>
+            </div>
+            <p v-bind:style="{opacity: opacity}">{{ showMessage }}</p>
+        </div>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                message: "",
+                checked: false,
+                opacity: 0
+            },
+            computed: {
+                showMessage(){
+                    return this.message == "" ? "" : this.message;
+                }
+            },
+            methods: {
+                show() {
+                    this.opacity = 1;
+                    setTimeout(() => this.opacity = 0, 1000);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
