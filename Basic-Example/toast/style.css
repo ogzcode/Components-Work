@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin-top: 2rem;
+    padding: .5rem 2rem;
+    font-size: 20px;
+    border: none;
+    border-radius: .25rem;
+    color: white;
+    background-color: rgb(24, 230, 103);
+    letter-spacing: 1px;
+}
+
+ul {
+    margin-top: 2rem;
+}
+
+li {
+    list-style-type: none;
+    background-color: rgb(166, 231, 191);
+    border-radius: .25rem;
+    color: rgb(21, 122, 60);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
