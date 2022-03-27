@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ff518a;
+
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    justify-content: center;
+}
+
+span {
+    font-size: 32px;
+}
+
+span.text{
+    color: black;
+    background-color: white;
+    padding: 1rem;
+    border-radius: .25rem;
+    margin: 0 1rem;
+    box-shadow: 0px 3px 6px rgba(0,0,0,.2), 0px 5px 15px -1px rgba(0,0,0,.1);
+}
+
+span:not(.text) {
+    color: white;
+}
