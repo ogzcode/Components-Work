@@ -13,19 +13,7 @@
 <body>
 
     <div id="app">
-        <ul>
-            <li v-for="user in users">
-                <div class="box">
-                    <img v-bind:src="user.image">
-                    <div class="username">
-                        <p> {{ user.name }} </p>
-                        <p> {{ user.userName }}</p>
-                    </div>
-                </div>
-
-                <button v-if="user.isFriend">Send Message</button>
-            </li>
-        </ul>
+        <user-box v-for="user in users" :user="user"></user-box>
     </div>
 
     <script src="app.js"></script>

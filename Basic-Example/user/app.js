@@ -25,6 +25,29 @@ const userList = [
     },
 ];
 
+Vue.component("user-box", {
+    template: 
+    `
+    <div class="box-container">
+        <div class="box">
+            <img v-bind:src="user.image">
+            <div class="username">
+                <p> {{ user.name }} </p>
+                <p> {{ user.userName }}</p>
+            </div>
+        </div>
+
+        <button v-if="user.isFriend">Send Message</button>
+    </div>
+    `,
+    props: {
+        user: {
+            type: Object,
+            required: true
+        }
+    }
+});
+
 new Vue({
     el: "#app",
     data: {
