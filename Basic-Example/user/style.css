@@ -36,7 +36,7 @@ body {
 }
 
 .header__btn:hover {
-    opacity: .9;
+    opacity: .85;
 }
 
 .main {
@@ -135,21 +135,23 @@ body {
     margin: .25rem 0;
 }
 
-.box__btn {
+.btn {
     font-size: 10px;
-    background-color: #bb4f73;
-    color: white;
-    border: none;
+    border: 1px solid #bb4f73;
     border-radius: 20px;
     padding: .25rem 1rem;
     font-weight: 600;
     letter-spacing: .8px;
     cursor: pointer;
-    transition: .2s;
+}
+.box__btn {
+    background-color: #bb4f73;
+    color: white;
 }
 
-.box__btn:hover {
-    opacity: .85;
+.accepted {
+    background-color: white;
+    color: #bb4f73;
 }
 
 .footer {

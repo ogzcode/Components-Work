@@ -22,7 +22,7 @@ Vue.component("friend-box", {
         <div class="friend__info">
             <p class="box__name">{{friendName}}</p>
             <p class="box__date">{{date}}</p>
-            <button class="box__btn">Accept</button>
+            <button class="btn" :class="getButtonStyle" v-on:click="toggle">{{getButtonText}}</button>
         </div>
     </div>`,
     props: {
@@ -38,25 +38,60 @@ Vue.component("friend-box", {
             type: String,
             required: true
         }
+    },
+    data(){
+        return {
+            isToggle: false,
+        };
+    },
+    methods: {
+        toggle(){
+            this.isToggle = !this.isToggle;
+        }
+    },
+    computed: {
+        getButtonText(){
+            return this.isToggle ? "Accepted" : "Accept";
+        },
+        getButtonStyle(){
+            return this.isToggle ? "accepted" : "box__btn";
+        }
     }
 });
 
 new Vue({
     el: "#container",
     data: {
-        info: [
-        {
-            "src": "avatar/man(1).png",
-            "className": "friend__avatar"
-        },
-        {
-            "src": "avatar/gamer.png",
-            "className": "friend__avatar"
-        },
-        {
-            "src": "avatar/woman.png",
-            "className": "friend__avatar"
+        friends: [
+            {
+                "name": "Joe",
+                "date": "19.02.2022",
+                "info": {
+                    "src": "avatar/man(1).png",
+                    "className": "friend__avatar"
+                }
+            },
+            {
+                "name": "Luke",
+                "date": "11.12.2021",
+                "info": {
+                    "src": "avatar/gamer.png",
+                    "className": "friend__avatar"
+                }
+            },
+            {
+                "name": "Jane",
+                "date": "9.06.2022",
+                "info": {
+                    "src": "avatar/woman.png",
+                    "className": "friend__avatar"
+                }
+            }
+        ]
+    },
+    computed: {
+        getFriendCount(){
+            return this.friends.length;
         }
-    ]
     }
 });
