@@ -8,57 +8,158 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    background-color: gray;
+    padding-top: 2rem;
 }
 
-img {
-    width: 64px;
-    height: 64px;
+.container {
+    width: 540px;
 }
 
-.box-container {
+.header {
+    text-align: right;
+    padding: 1rem 1rem 4rem 1rem;
+    background-color: #fff9ef;
+    border-radius: .5rem .5rem 0 0;
+}
+
+.header__btn {
+    border: none;
+    border-radius: 20px;
+    background-color: #f03131;
+    color: white;
+    font-weight: 600;
+    padding: .4rem 2rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.header__btn:hover {
+    opacity: .9;
+}
+
+.main {
+    background-color: #f0f0ef;
+    position: relative;
+    padding-top: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.user__avatar {
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0px 2px 2px rgba(0,0,0,.1);
+    width: 96px;
+    height: 96px;
     display: flex;
-    min-width: 400px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin: 1rem 0;
-    background-color: rgb(240, 240, 240);
-    border: .25rem;
-    border-radius: .5rem;
-    padding: .5rem;
-    box-shadow: 0px 1px 5px -1px rgba(0,0,0,.3);
+}
+
+.user__avatar img {
+    width: 60%;
+    height: 60%;
+}
+
+.user__name {
+    text-transform: uppercase;
+    font-size: 24px;
+    color: #f03131;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.user__count {
+    text-align: center;
+    font-size: 20px;
+    color: #3c3c3c;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgb(173, 173, 173);
+}
+
+.friends {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem
 }
 
 .box {
     display: flex;
     align-items: center;
-}
-
-.username {
-    margin-left: .5rem;
-    font-size: 14px;
-}
-
-.username p:nth-child(1) {
-    color: rgb(97, 97, 97);
-}
-
-.username p:nth-child(2) {
-    font-size: 12px;
-    color: rgb(172, 172, 172);
-}
-
-button {
-    font-size: 14px;
-    border: none;
-    background-color: rgb(25, 162, 180);
-    padding: .5rem 1rem;
-    color: white;
+    margin-bottom: 2rem;
+    padding: .5rem;
     border-radius: .25rem;
-    cursor: pointer;
+    transition: .2s ease;
 }
 
-button:active {
-    transform: scale(.9);
+.box:hover {
+    box-shadow: 0px 2px 6px rgba(0,0,0,.2);
+}
+
+.friend__avatar {
+    background-color: white;
+    border-radius: 50%;
+    margin-right: .75rem;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 3px rgba(0,0,0,.1);
+}
+
+.friend__avatar img {
+    width: 75%;
+    height: 75%;
+}
+
+.friend__info {
+    flex: 1;
+}
+
+.box__name {
+    font-size: 12px;
+}
+
+.box__date {
+    font-size: 10px;
+    font-style: italic;
+    color: gray;
+    margin: .25rem 0;
+}
+
+.box__btn {
+    font-size: 10px;
+    background-color: #bb4f73;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: .25rem 1rem;
+    font-weight: 600;
+    letter-spacing: .8px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.box__btn:hover {
+    opacity: .85;
+}
+
+.footer {
+    background-color: #bb4f73;
+    padding: .5rem 0;
+    text-align: center;
+    border-radius: 0 0 .5rem .5rem
+}
+
+.licence {
+    color: white;
+    font-size: 12px;
 }

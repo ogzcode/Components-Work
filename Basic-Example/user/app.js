@@ -1,56 +1,62 @@
-const userList = [
-    {
-        "image": "avatar/gamer.png",
-        "name": "Joe Doe",
-        "userName": "@jODoe",
-        "isFriend": false
-    },
-    {
-        "image": "avatar/woman.png",
-        "name": "Angel White",
-        "userName": "@angele",
-        "isFriend": true
-    },
-    {
-        "image": "avatar/man.png",
-        "name": "Chris Woo",
-        "userName": "@CHwoo",
-        "isFriend": false
-    },
-    {
-        "image": "avatar/man(1).png",
-        "name": "Mark Brook",
-        "userName": "@brookMk",
-        "isFriend": true
-    },
-];
-
-Vue.component("user-box", {
-    template: 
-    `
-    <div class="box-container">
-        <div class="box">
-            <img v-bind:src="user.image">
-            <div class="username">
-                <p> {{ user.name }} </p>
-                <p> {{ user.userName }}</p>
-            </div>
-        </div>
-
-        <button v-if="user.isFriend">Send Message</button>
-    </div>
-    `,
+Vue.component("avatar", {
+    template: `
+    <div :class="className">   
+        <img :src="imageSrc"/>
+    </div>`,
     props: {
-        user: {
+        imageSrc: {
+            type: String,
+            required: true
+        },
+        className: {
+            type: String,
+            required: true
+        }
+    }
+});
+
+Vue.component("friend-box", {
+    template: `
+    <div class="box">
+        <avatar :image-src="avatarInfo.src" :class-name="avatarInfo.className"></avatar>
+        <div class="friend__info">
+            <p class="box__name">{{friendName}}</p>
+            <p class="box__date">{{date}}</p>
+            <button class="box__btn">Accept</button>
+        </div>
+    </div>`,
+    props: {
+        avatarInfo: {
             type: Object,
+            required: true
+        },
+        friendName: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: String,
             required: true
         }
     }
 });
 
 new Vue({
-    el: "#app",
+    el: "#container",
     data: {
-        users: userList
+        info: [
+        {
+            "src": "avatar/man(1).png",
+            "className": "friend__avatar"
+        },
+        {
+            "src": "avatar/gamer.png",
+            "className": "friend__avatar"
+        },
+        {
+            "src": "avatar/woman.png",
+            "className": "friend__avatar"
+        }
+    ]
     }
 });
