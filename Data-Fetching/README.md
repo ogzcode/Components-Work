@@ -1,6 +1,6 @@
 # Vue.js Örnek Proje
 Bu projede Vue.js ile <a href="https://rickandmortyapi.com/">Rick Morty</a> API ına istek attım ve gelen verileri listeledim.
-Aynı zamanda Pina ile global state yönetimini uyguladım ve vue-router ile Clien side routing yaptım.
+Aynı zamanda Pinia ile global state yönetimini uyguladım ve vue-router ile Clien side routing yaptım.
 
 ## Kullandığım Teknolojiler
 * Vue.js
