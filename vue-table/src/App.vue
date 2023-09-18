@@ -52,6 +52,8 @@ const header = ref([
 	}
 ])
 
+const currentPage = ref(1);
+
 const formatData = (date) => {
     const d = new Date(date);
 

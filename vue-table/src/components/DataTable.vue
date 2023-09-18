@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <table>
-            <TableHeader :header="header"/>
+            <TableHeader :header="header" />
             <TableBody :data="dataToDisplay" :header="header">
                 <template v-for="(_, name) in $slots" v-slot:[name]="{ data }">
                     <slot :name="name" :data="data">
@@ -9,8 +9,13 @@
                     </slot>
                 </template>
             </TableBody>
-            <TableFooter v-model:items-per-page="itemsInTable" :count="totalItems"/>
         </table>
+        <TableFooter 
+            v-model:items-per-page="itemsInTable" 
+            :count="totalItems" 
+            :current-page="currentPage"
+            @page-change="onPageChange"
+        />
     </div>
 </template>
 
@@ -35,7 +40,7 @@ const props = defineProps({
     }
 })
 
-const currntPage = ref(1);
+const currentPage = ref(1);
 const itemsInTable = ref(props.itemsPerPage || 10);
 
 const dataToDisplay = computed(() => {
@@ -45,7 +50,7 @@ const dataToDisplay = computed(() => {
         return props.data;
     }
     else {
-        const start = (currntPage.value - 1) * itemsInTable.value;
+        const start = (currentPage.value - 1) * itemsInTable.value;
         const end = start + itemsInTable.value;
         return props.data.slice(start, end);
     }
@@ -53,25 +58,25 @@ const dataToDisplay = computed(() => {
 
 const totalItems = computed(() => {
     return props.data.length || 0;
-})
+});
+
+const onPageChange = (page) => {
+    console.log(page);
+    currentPage.value = page;
+}
 </script>
 
 <style scoped>
-
 .card {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 32px;
-    display: flex;
-    justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
     border-collapse: collapse;
-    max-width: 900px;
     width: 100%;
     border: 1px solid #ddd;
-
 }
 </style>
