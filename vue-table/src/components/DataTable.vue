@@ -1,5 +1,8 @@
 <template>
     <div class="card">
+        <div>
+            <input type="text" v-model="searchQuery" @input="searchItems()" placeholder="Search..." />
+        </div>
         <table>
             <TableHeader :header="header" />
             <TableBody :data="dataToDisplay" :header="header">
@@ -10,12 +13,8 @@
                 </template>
             </TableBody>
         </table>
-        <TableFooter 
-            v-model:items-per-page="itemsInTable" 
-            :count="totalItems" 
-            :current-page="currentPage"
-            @page-change="onPageChange"
-        />
+        <TableFooter v-model:items-per-page="itemsInTable" :count="totalItems" :current-page="currentPage"
+            @page-change="onPageChange" />
     </div>
 </template>
 
@@ -41,29 +40,49 @@ const props = defineProps({
 })
 
 const currentPage = ref(1);
+const searchQuery = ref('');
 const itemsInTable = ref(props.itemsPerPage || 10);
+const initData = ref(props.data);
 
 const dataToDisplay = computed(() => {
-    if (!props.data) return [];
+    if (!initData.value) return [];
 
-    if (props.data.length <= itemsInTable.value) {
-        return props.data;
+    if (initData.value.length <= itemsInTable.value) {
+        return initData.value;
     }
     else {
         const start = (currentPage.value - 1) * itemsInTable.value;
         const end = start + itemsInTable.value;
-        return props.data.slice(start, end);
+        return initData.value.slice(start, end);
     }
 })
 
 const totalItems = computed(() => {
-    return props.data.length || 0;
+    return initData.value.length || 0;
 });
 
 const onPageChange = (page) => {
-    console.log(page);
     currentPage.value = page;
 }
+
+const searchItems = () => {
+    initData.value = props.data;
+
+    let result = [];
+
+    for (let i = 0; i < initData.value.length; i++) {
+        const item = initData.value[i];
+        for (let key in item) {
+            if (item[key].toString().toLowerCase().includes(searchQuery.value.toLowerCase())) {
+                result.push(item);
+                break;
+            }
+        }
+    }
+
+    initData.value = result;
+}
+
 </script>
 
 <style scoped>
@@ -78,5 +97,15 @@ table {
     border-collapse: collapse;
     width: 100%;
     border: 1px solid #ddd;
+}
+
+input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+    width: 240px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 1rem;
 }
 </style>
