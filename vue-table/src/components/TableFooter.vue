@@ -128,7 +128,6 @@ const endPage = computed(() => {
 
 const visiblePages = computed(() => {
     const range = [];
-    console.log(startPage.value, endPage.value);
     for (let i = startPage.value; i <= endPage.value; i++) {
         range.push(i);
     }

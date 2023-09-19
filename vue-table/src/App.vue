@@ -28,22 +28,26 @@ const header = ref([
 	{
 		columnName: 'Name',
 		key: 'name',
-		width: '120px'
+		width: '120px',
+		sortEnabled: true
 	},
 	{
 		columnName: 'Email',
 		key: 'email',
-		width: '120px'
+		width: '120px',
+		sortEnabled: true
 	},
 	{
 		columnName: 'Company',
 		key: 'company',
-		width: '120px'
+		width: '120px',
+		sortEnabled: true
 	},
 	{
 		columnName: 'Date',
 		key: 'date',
-		width: '120px'
+		width: '120px',
+		sortEnabled: true
 	},
 	{
 		columnName: 'Actions',
@@ -51,8 +55,6 @@ const header = ref([
 		width: '120px'
 	}
 ])
-
-const currentPage = ref(1);
 
 const formatData = (date) => {
     const d = new Date(date);

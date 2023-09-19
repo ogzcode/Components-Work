@@ -4,7 +4,7 @@
             <input type="text" v-model="searchQuery" @input="searchItems()" placeholder="Search..." />
         </div>
         <table>
-            <TableHeader :header="header" />
+            <TableHeader :header="header" @on-sort="sort"/>
             <TableBody :data="dataToDisplay" :header="header">
                 <template v-for="(_, name) in $slots" v-slot:[name]="{ data }">
                     <slot :name="name" :data="data">
@@ -20,6 +20,8 @@
 
 <script setup>
 import { defineProps, ref, computed } from 'vue';
+import arraySort from 'array-sort';
+
 import TableHeader from './TableHeader.vue';
 import TableBody from './TableBody.vue';
 import TableFooter from './TableFooter.vue';
@@ -81,6 +83,10 @@ const searchItems = () => {
     }
 
     initData.value = result;
+}
+
+const sort = ({ columnName, order }) => {
+    arraySort(initData.value, columnName, { reverse: order === 'desc' });
 }
 
 </script>
