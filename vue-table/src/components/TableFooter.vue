@@ -67,6 +67,7 @@ const props = defineProps({
     }
 })
 
+const totalVisible = 5;
 const emit = defineEmits(['update:itemsPerPage', "page-change"]);
 
 const itemsInCountInTable = computed({
@@ -91,7 +92,6 @@ const onClickLastPage = () => {
 }
 
 const onClickPrevPage = () => {
-    console.log(props.currentPage);
     if (props.currentPage > 1) {
         emit('page-change', props.currentPage - 1);
     }
@@ -107,23 +107,33 @@ const onClickPage = (page) => {
     emit('page-change', page);
 }
 
+const startPage = computed(() => {
+    if (props.currentPage === 1 || pageCount.value <= totalVisible
+        || (props.currentPage === pageCount.value - 1 && pageCount.value <= totalVisible)
+        || props.currentPage <= Math.floor(totalVisible / 2)) {
+        return 1;
+    }
+
+    if (props.currentPage + 2 > pageCount.value) {
+        return pageCount.value - totalVisible + 1;
+    }
+
+    return props.currentPage - 2;
+
+});
+
+const endPage = computed(() => {
+    return Math.min(startPage.value + totalVisible - 1, pageCount.value);
+});
+
 const visiblePages = computed(() => {
-    const totalVisible = 5;
-    const half = Math.floor(totalVisible / 2);
-    let start = props.currentPage - half;
-    let end = props.currentPage + half;
-
-    if (start < 1) {
-        start = 1;
-        end = totalVisible;
+    const range = [];
+    console.log(startPage.value, endPage.value);
+    for (let i = startPage.value; i <= endPage.value; i++) {
+        range.push(i);
     }
 
-    if (end > pageCount.value) {
-        start = pageCount.value - (totalVisible - 1);
-        end = pageCount.value;
-    }
-
-    return Array.from({ length: (end + 1) - start }, (_, i) => start + i);
+    return range;
 });
 
 </script>
@@ -180,4 +190,5 @@ select option {
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
-}</style>
+}
+</style>
