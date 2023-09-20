@@ -1,36 +1,106 @@
-import { ref } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { defineStore } from 'pinia'
 import arraySort from 'array-sort';
 
 export const useDataTable = defineStore("data-table", () => {
-    const data = ref([])
+    const realData = ref([])
     const headers = ref([]);
-    const initData = ref([]);
+    const currentPage = ref(1);
+    const itemsPerPage = ref(10);
+    const searchQuery = ref('');
 
     const init = (data, header) => {
-        data.value = data;
+        realData.value = data;
         headers.value = header;
+        initData.value = data;
     }
 
     const setData = (data) => {
-        data.value = data;
+        realData.value = data;
     }
 
-    const setHeaders = (headers) => {
-        headers.value = headers;
+    const setHeaders = (data) => {
+        headers.value = data;
+    }
+
+    const setItemsPerPage = (page) => {
+        itemsPerPage.value = page;
     }
 
     const sort = ({ columnName, order }) => {
         arraySort(initData.value, columnName, { reverse: order === 'desc' });
     }
 
+    const totalItems = computed(() => realData.value.length);
+
+    const pageCount = computed(() => Math.ceil(totalItems.value / itemsPerPage.value));
+
+    const pageChange = (page) => {
+        currentPage.value = page;
+    }
+
+    const setFirstPage = () => {
+        currentPage.value = 1;
+    }
+
+    const setLastPage = () => {
+        currentPage.value = pageCount.value;
+    }
+
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+            currentPage.value--;
+        }
+    }
+
+    const nextPage = () => {
+        if (currentPage.value < pageCount.value) {
+            currentPage.value++;
+        }
+    }
+
+    const searchItems = () => {
+        if (searchQuery.value.length > 0) {
+            initData.value = realData.value.filter((item) => {
+                return Object.keys(item).some((key) => {
+                    return String(item[key]).toLowerCase().includes(searchQuery.value.toLowerCase());
+                });
+            });
+        } else {
+            initData.value = realData.value;
+        }
+    }
+
+    const initData = computed(() => {
+        const start = (currentPage.value - 1) * itemsPerPage.value;
+        const end = start + itemsPerPage.value;
+        return realData.value.slice(start, end);
+    });
+
+    watch(() => [realData.value, currentPage.value, itemsPerPage.value, searchQuery.value], () => {
+        const start = (currentPage.value - 1) * itemsPerPage.value;
+        const end = start + itemsPerPage.value;
+        initData.value = realData.value.slice(start, end);
+    });
 
     return {
-        data,
         headers,
+        currentPage,
+        initData,
+        itemsPerPage,
+        totalItems,
+        pageCount,
+        searchQuery,
+        searchItems,
         init,
         setData,
         setHeaders,
-        sort
+        sort,
+        setItemsPerPage,
+        pageChange,
+        setFirstPage,
+        setLastPage,
+        prevPage,
+        nextPage,
     }
 });

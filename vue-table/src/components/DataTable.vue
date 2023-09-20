@@ -1,11 +1,15 @@
 <template>
     <div class="card">
         <div>
-            <input type="text" v-model="searchQuery" @input="searchItems()" placeholder="Search..." />
+            <input type="text" 
+                v-model="dataTableStore.searchQuery" 
+                @input="dataTableStore.searchItems()"
+                placeholder="Search..." 
+            />
         </div>
         <table>
-            <TableHeader :header="header" @on-sort="sort"/>
-            <TableBody :data="dataToDisplay" :header="header">
+            <TableHeader/>
+            <TableBody>
                 <template v-for="(_, name) in $slots" v-slot:[name]="{ data }">
                     <slot :name="name" :data="data">
                         {{ data[name] }}
@@ -13,24 +17,19 @@
                 </template>
             </TableBody>
         </table>
-        <TableFooter v-model:items-per-page="itemsInTable" :count="totalItems" :current-page="currentPage"
-            @page-change="onPageChange" />
+        <TableFooter />
     </div>
 </template>
 
 <script setup>
-import { defineProps, ref, computed } from 'vue';
-import arraySort from 'array-sort';
+import { defineProps, ref } from 'vue';
+import { useDataTable } from '../stores/useDataTable';
 
 import TableHeader from './TableHeader.vue';
 import TableBody from './TableBody.vue';
 import TableFooter from './TableFooter.vue';
 
 const props = defineProps({
-    header: {
-        type: Array,
-        required: true
-    },
     data: {
         type: Array,
         required: true
@@ -41,31 +40,10 @@ const props = defineProps({
     }
 })
 
-const currentPage = ref(1);
 const searchQuery = ref('');
-const itemsInTable = ref(props.itemsPerPage || 10);
-const initData = ref(props.data);
+const initData = ref([]);
 
-const dataToDisplay = computed(() => {
-    if (!initData.value) return [];
-
-    if (initData.value.length <= itemsInTable.value) {
-        return initData.value;
-    }
-    else {
-        const start = (currentPage.value - 1) * itemsInTable.value;
-        const end = start + itemsInTable.value;
-        return initData.value.slice(start, end);
-    }
-})
-
-const totalItems = computed(() => {
-    return initData.value.length || 0;
-});
-
-const onPageChange = (page) => {
-    currentPage.value = page;
-}
+const dataTableStore = useDataTable();
 
 const searchItems = () => {
     initData.value = props.data;
@@ -83,10 +61,6 @@ const searchItems = () => {
     }
 
     initData.value = result;
-}
-
-const sort = ({ columnName, order }) => {
-    arraySort(initData.value, columnName, { reverse: order === 'desc' });
 }
 
 </script>
