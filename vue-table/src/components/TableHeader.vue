@@ -1,7 +1,7 @@
 <template>
     <thead>
         <tr>
-            <th v-for="column in header" 
+            <th v-for="column in dataTableStore.headers" 
                 :key="column.key" 
                 :style="{ width: column.width }"
                 @click="handleSort(column.key, column.sortEnabled)"
@@ -14,18 +14,15 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed, defineEmits } from 'vue';
+import { ref, computed, defineEmits } from 'vue';
+import { useDataTable } from '../stores/useDataTable';
+
+
+const dataTableStore = useDataTable();
 
 const columnLabelAndOrder = ref({
     columnName: '',
     order: ''
-})
-
-defineProps({
-    header: {
-        type: Array,
-        required: true
-    }
 })
 
 const emit = defineEmits(["on-sort"])

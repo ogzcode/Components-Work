@@ -20,41 +20,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted } from 'vue';
 import DataTable from './components/DataTable.vue';
 import { customers } from '@/data/customer';
+import { header } from '@/data/header';
+import { useDataTable } from './stores/useDataTable';
 
-const header = ref([
-	{
-		columnName: 'Name',
-		key: 'name',
-		width: '120px',
-		sortEnabled: true
-	},
-	{
-		columnName: 'Email',
-		key: 'email',
-		width: '120px',
-		sortEnabled: true
-	},
-	{
-		columnName: 'Company',
-		key: 'company',
-		width: '120px',
-		sortEnabled: true
-	},
-	{
-		columnName: 'Date',
-		key: 'date',
-		width: '120px',
-		sortEnabled: true
-	},
-	{
-		columnName: 'Actions',
-		key: 'actions',
-		width: '120px'
-	}
-])
+const dataTableStore = useDataTable();
+
+onMounted(() => {
+	dataTableStore.init(customers, header);
+});
 
 const formatData = (date) => {
     const d = new Date(date);
