@@ -12,7 +12,23 @@ export const useDataTable = defineStore("data-table", () => {
     const selectedItems = ref([]);
 
     const setSelectedItems = (item) => {
-        selectedItems.value.push(item);
+        if (selectedItems.value.includes(item)) {
+            const index = selectedItems.value.indexOf(item);
+            if (index > -1) {
+                selectedItems.value.splice(index, 1);
+            }
+        }
+        else {
+            selectedItems.value.push(item);
+        }
+    }
+
+    const selectAll = (check) => {
+        if (check) {
+            selectedItems.value = [...initData.value];
+        } else {
+            selectedItems.value = [];
+        }
     }
 
     const init = (data, header) => {
@@ -95,6 +111,7 @@ export const useDataTable = defineStore("data-table", () => {
         dataToDisplay,
         selectedItems,
         setSelectedItems,
+        selectAll,
         searchItems,
         init,
         setData,

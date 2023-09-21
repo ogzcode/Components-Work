@@ -21,7 +21,6 @@
                 </template>
             </tr>
         </template>
-        <span>{{ dataTableStore.dataToDisplay.length }}</span>
     </tbody>
 </template>
 

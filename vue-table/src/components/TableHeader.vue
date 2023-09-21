@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>
-                <input type="checkbox" />
+                <input type="checkbox" v-model="check" @change="dataTableStore.selectAll(check)" />
             </th>
             <th v-for="column in dataTableStore.headers" 
                 :key="column.key" 
@@ -43,6 +43,8 @@ const columnLabelAndOrder = ref({
     columnName: '',
     order: ''
 })
+
+const check = ref(false);
 
 const handleSort = (columnName, sortEnabled) => {
     if (!sortEnabled) return;
