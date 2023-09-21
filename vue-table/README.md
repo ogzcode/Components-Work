@@ -1,10 +1,17 @@
-# ./
+# Vue.js Data Table
+Vue.js ve Pinia kullanarak geliştirdiğim Data Table bileşeni örneği.
+
+## İşlevler
+* Tekli seçim
+* Çoklu seçim
+* Sayfalama
+* Sayfada gösterilecek veri miktarı
+* Sütun tabanlı sıralama
+* Global arama filtresi
+
+> Data Table için veri yönetimi ve işlevler useDataTable store u içinde yazılmıştır.
 
 This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 ## Customize configuration
 
