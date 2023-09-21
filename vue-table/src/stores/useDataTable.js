@@ -9,6 +9,11 @@ export const useDataTable = defineStore("data-table", () => {
     const itemsPerPage = ref(10);
     const searchQuery = ref('');
     const initData = ref([]);
+    const selectedItems = ref([]);
+
+    const setSelectedItems = (item) => {
+        selectedItems.value.push(item);
+    }
 
     const init = (data, header) => {
         realData.value = data;
@@ -88,6 +93,8 @@ export const useDataTable = defineStore("data-table", () => {
         pageCount,
         searchQuery,
         dataToDisplay,
+        selectedItems,
+        setSelectedItems,
         searchItems,
         init,
         setData,

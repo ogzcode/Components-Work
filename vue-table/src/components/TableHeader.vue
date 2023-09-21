@@ -1,9 +1,16 @@
 <template>
     <thead>
         <tr>
-            <th v-for="column in dataTableStore.headers" :key="column.key" :style="{ width: column.width }"
-                @click="handleSort(column.key, column.sortEnabled)">
+            <th>
+                <input type="checkbox" />
+            </th>
+            <th v-for="column in dataTableStore.headers" 
+                :key="column.key" 
+                :style="{ width: column.width }"
+                @click="handleSort(column.key, column.sortEnabled)"
+            >
                 {{ column.columnName }}
+
                 <span v-if="columnLabelAndOrder.columnName === column.key">
                     <span v-if="columnLabelAndOrder.order === 'asc'">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -26,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { useDataTable } from '../stores/useDataTable';
 
 

@@ -1,11 +1,12 @@
 <template>
     <div class="card">
-        <div>
+        <div class="header">
             <input type="text" 
                 v-model="dataTableStore.searchQuery" 
                 @input="dataTableStore.searchItems()"
                 placeholder="Search..." 
             />
+            <button @click="printSelectedItems" v-if="dataTableStore.selectedItems.length > 0">Delete</button>
         </div>
         <table>
             <TableHeader/>
@@ -30,6 +31,10 @@ import TableFooter from './TableFooter.vue';
 
 const dataTableStore = useDataTable();
 
+const printSelectedItems = () => {
+    console.log(dataTableStore.selectedItems);
+}
+
 </script>
 
 <style scoped>
@@ -53,6 +58,21 @@ input {
     width: 240px;
     box-sizing: border-box;
     outline: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
+}
+
+button {
+    border: none;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+    outline: none;
 }
 </style>
