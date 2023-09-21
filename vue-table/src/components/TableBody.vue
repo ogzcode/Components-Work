@@ -1,6 +1,6 @@
 <template>
     <tbody>
-        <template v-for="(row, i) in dataTableStore.initData" :key="i">
+        <template v-for="(row, i) in dataTableStore.dataToDisplay" :key="i">
             <tr>
                 <template v-for="(column, j) in dataTableStore.headers" :key="j">
                     <td :style="{ width: column.width }">
@@ -11,7 +11,7 @@
                 </template>
             </tr>
         </template>
-        <span>{{ dataTableStore.initData.length }}</span>
+        <span>{{ dataTableStore.dataToDisplay.length }}</span>
     </tbody>
 </template>
 

@@ -22,46 +22,13 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
 import { useDataTable } from '../stores/useDataTable';
 
 import TableHeader from './TableHeader.vue';
 import TableBody from './TableBody.vue';
 import TableFooter from './TableFooter.vue';
 
-const props = defineProps({
-    data: {
-        type: Array,
-        required: true
-    },
-    itemsPerPage: {
-        type: Number,
-        default: 10
-    }
-})
-
-const searchQuery = ref('');
-const initData = ref([]);
-
 const dataTableStore = useDataTable();
-
-const searchItems = () => {
-    initData.value = props.data;
-
-    let result = [];
-
-    for (let i = 0; i < initData.value.length; i++) {
-        const item = initData.value[i];
-        for (let key in item) {
-            if (item[key].toString().toLowerCase().includes(searchQuery.value.toLowerCase())) {
-                result.push(item);
-                break;
-            }
-        }
-    }
-
-    initData.value = result;
-}
 
 </script>
 

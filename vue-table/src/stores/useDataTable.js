@@ -8,6 +8,7 @@ export const useDataTable = defineStore("data-table", () => {
     const currentPage = ref(1);
     const itemsPerPage = ref(10);
     const searchQuery = ref('');
+    const initData = ref([]);
 
     const init = (data, header) => {
         realData.value = data;
@@ -31,7 +32,7 @@ export const useDataTable = defineStore("data-table", () => {
         arraySort(initData.value, columnName, { reverse: order === 'desc' });
     }
 
-    const totalItems = computed(() => realData.value.length);
+    const totalItems = computed(() => initData.value.length);
 
     const pageCount = computed(() => Math.ceil(totalItems.value / itemsPerPage.value));
 
@@ -71,17 +72,12 @@ export const useDataTable = defineStore("data-table", () => {
         }
     }
 
-    const initData = computed(() => {
+    const dataToDisplay = computed(() => {
         const start = (currentPage.value - 1) * itemsPerPage.value;
         const end = start + itemsPerPage.value;
-        return realData.value.slice(start, end);
+        return initData.value.slice(start, end);
     });
 
-    watch(() => [realData.value, currentPage.value, itemsPerPage.value, searchQuery.value], () => {
-        const start = (currentPage.value - 1) * itemsPerPage.value;
-        const end = start + itemsPerPage.value;
-        initData.value = realData.value.slice(start, end);
-    });
 
     return {
         headers,
@@ -91,6 +87,7 @@ export const useDataTable = defineStore("data-table", () => {
         totalItems,
         pageCount,
         searchQuery,
+        dataToDisplay,
         searchItems,
         init,
         setData,
