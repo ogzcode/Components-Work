@@ -1,15 +1,24 @@
 <template>
-    <div class="card">
-        <div class="header">
-            <input type="text" 
-                v-model="dataTableStore.searchQuery" 
-                @input="dataTableStore.searchItems()"
-                placeholder="Search..." 
-            />
-            <button @click="printSelectedItems" v-if="dataTableStore.selectedItems.length > 0">Delete</button>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white py-4 px-8">
+        <div class="flex justify-between items-center mb-8">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input type="text" v-model="dataTableStore.searchQuery" @input="dataTableStore.searchItems()"
+                    placeholder="Search..."
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-md w-80 bg-gray-50 outline-0" />
+            </div>
+            <div>
+                <slot name="headerActions"></slot>
+            </div>
         </div>
-        <table>
-            <TableHeader/>
+        <table class="w-full text-sm text-left text-gray-500">
+            <TableHeader />
             <TableBody>
                 <template v-for="(_, name) in $slots" v-slot:[name]="{ data }">
                     <slot :name="name" :data="data">
@@ -31,48 +40,6 @@ import TableFooter from './TableFooter.vue';
 
 const dataTableStore = useDataTable();
 
-const printSelectedItems = () => {
-    console.log(dataTableStore.selectedItems);
-}
-
 </script>
 
-<style scoped>
-.card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 32px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
-}
-
-input {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px;
-    width: 240px;
-    box-sizing: border-box;
-    outline: none;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-button {
-    border: none;
-    background-color: #ddd;
-    border-radius: 5px;
-    padding: 8px;
-    cursor: pointer;
-    outline: none;
-}
-</style>
+<style scoped></style>

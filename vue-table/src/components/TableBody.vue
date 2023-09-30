@@ -1,19 +1,20 @@
 <template>
     <tbody>
         <template v-for="(row, i) in dataTableStore.dataToDisplay" :key="i">
-            <tr>
-                <td>
+            <tr class="bg-white border-b hover:bg-gray-50">
+                <td class="w-4 p-4">
                     <input 
                         type="checkbox" 
                         :checked="dataTableStore.selectedItems.includes(row)" 
                         @change="onChangeSelect(row)" 
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                     />
                 </td>
                 <template v-for="(column, j) in dataTableStore.headers" :key="j">
                     <td :style="{
                         minWidth: column.columnWidth ? `${column.columnWidth}px` : '0',
                         width: 'auto'
-                    }">
+                    }" class="px-6 py-3">
                         <slot :name="column.key" :data="row">
                             {{ row[column.key] }}
                         </slot>
@@ -36,12 +37,5 @@ const onChangeSelect = (row) => {
 </script>
 
 <style scoped>
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
 
-td:first-child {
-    width: 16px;
-}
 </style>

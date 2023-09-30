@@ -1,13 +1,15 @@
 <template>
-    <thead>
+    <thead class="text-sm text-slate-900 uppercase bg-slate-50">
         <tr>
-            <th>
-                <input type="checkbox" v-model="check" @change="dataTableStore.selectAll(check)" />
+            <th scope="col" class="p-4">
+                <input type="checkbox" v-model="check" @change="dataTableStore.selectAll(check)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
             </th>
             <th v-for="column in dataTableStore.headers" 
                 :key="column.key" 
                 :style="{ width: column.width }"
                 @click="handleSort(column.key, column.sortEnabled)"
+                class="px-6 py-3 text-left text-gray-500 font-semibold tracking-wider cursor-pointer"
+                scope="col"
             >
                 {{ column.columnName }}
 
@@ -62,22 +64,5 @@ const handleSort = (columnName, sortEnabled) => {
 </script>
 
 <style scoped>
-thead {
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    font-weight: bold;
-}
 
-th {
-    padding: 8px;
-    text-align: left;
-    font-weight: bold;
-}
-
-svg {
-    margin-left: 8px;
-    fill: black;
-}
 </style>
