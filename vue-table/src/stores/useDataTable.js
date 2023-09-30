@@ -99,6 +99,31 @@ export const useDataTable = defineStore("data-table", () => {
         return initData.value.slice(start, end);
     });
 
+    const deleteItem = (item) => {
+        const index = realData.value.indexOf(item);
+        const index2 = initData.value.indexOf(item);
+        if (index > -1) {
+            realData.value.splice(index, 1);
+            initData.value.splice(index2, 1);
+        }
+    }
+
+    const addItem = (item) => {
+        const existItem = initData.value.find((i) => i.id === item.id);
+
+        if (existItem) {
+            let index1 = initData.value.indexOf(existItem);
+            let index2 = realData.value.indexOf(existItem);
+
+            initData.value[index1] = item;
+            realData.value[index2] = item;
+        }
+        else {
+            realData.value.push(item);
+            initData.value.push(item);
+        }
+    }
+
 
     return {
         headers,
@@ -123,5 +148,7 @@ export const useDataTable = defineStore("data-table", () => {
         setLastPage,
         prevPage,
         nextPage,
+        deleteItem,
+        addItem
     }
 });
