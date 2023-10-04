@@ -24,6 +24,12 @@ export const header = [
         sortEnabled: true
     },
     {
+        columnName: 'Status',
+        key: 'status',
+        width: '120px',
+        sortEnabled: true
+    },
+    {
         columnName: 'Actions',
         key: 'actions',
         width: '120px'

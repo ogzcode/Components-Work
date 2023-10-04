@@ -3,6 +3,12 @@
 		<DataTable :header="header" :data="customers">
 			<template v-slot:headerActions>
 				<button class="py-2 px-4 bg-sky-500 text-white rounded text-sm font-medium tracking-wide"  @click="handleChangeViewDialog(true)">Create New</button>
+				<select @change="(e) => dataTableStore.filterByStatus(e.target.value)" class="border border-slate-200 rounded p-2 outline-0 text-slate-800 ml-2">
+					<option value="">Select an option</option>
+					<option value="Working">Working</option>
+					<option value="On Vacation">On Vacation</option>
+					<option value="Left">Left</option>
+				</select>
 			</template>
 
 			<template v-slot:name="{ data }">
@@ -16,6 +22,12 @@
 			</template>
 			<template v-slot:date="{ data }">
 				{{ formatData(data.date) }}
+			</template>
+			<template v-slot:status="{ data }">
+				<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium tracking-wide"
+                    :class="[getOrderStatusStyle(data.status)]">
+                    {{ data.status }}
+                </span>
 			</template>
 			<template v-slot:actions="{ data }">
 				<button
@@ -82,6 +94,8 @@ const company = ref('');
 const date = ref('');
 const id = ref('');
 
+const selectFilter = ref('');
+
 const handleChangeViewDialog = (value) => {
 	viewExampleDialog.value = value;
 
@@ -138,6 +152,22 @@ const handleSubmitNewUser = () => {
 	dataTableStore.addItem(newUser);
 	viewExampleDialog.value = false;
 }
+
+const getOrderStatusStyle = (status) => {
+    switch (status) {
+        case 'On Vacation':
+            return 'bg-yellow-100 text-yellow-800';
+        case 'Processing':
+            return 'bg-blue-100 text-blue-800';
+        case 'Working':
+            return 'bg-green-100 text-green-800';
+        case 'Left':
+            return 'bg-red-100 text-red-800';
+        default:
+            return 'bg-yellow-100 text-yellow-800';
+    }
+}
+
 </script>
 
 <style scoped></style>

@@ -124,6 +124,15 @@ export const useDataTable = defineStore("data-table", () => {
         }
     }
 
+    const filterByStatus = (status) => {
+        if (status === '') {
+            initData.value = realData.value;
+        }
+        else {
+            initData.value = realData.value.filter((item) => item.status === status);
+        }
+    }
+
 
     return {
         headers,
@@ -149,6 +158,7 @@ export const useDataTable = defineStore("data-table", () => {
         prevPage,
         nextPage,
         deleteItem,
-        addItem
+        addItem,
+        filterByStatus
     }
 });
