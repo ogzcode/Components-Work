@@ -1,4 +1,5 @@
-# ./
+# Vue Toast
+Vue.js, Pinia ve Tailwind.css ile oluşturulmuş temel Toast kütüphanesi. 
 
 This template should help get you started developing with Vue 3 in Vite.
 
