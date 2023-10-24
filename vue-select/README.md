@@ -1,5 +1,6 @@
-# vue-select bileşeni
-Vye.js ve Tailwind.css ile geliştirilen Pure select bileşeni.
+# ./
+
+This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
