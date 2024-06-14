@@ -1,7 +1,6 @@
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
     Popover,
     PopoverContent,
@@ -10,8 +9,7 @@ import {
 
 
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ChevronDown } from "lucide-react"
-import { Input } from "../components/ui/input"
+import { ChevronDown, X } from "lucide-react"
 
 import { Item } from "./components/Item"
 import { Header } from "./components/Header"
@@ -33,7 +31,7 @@ export default function MultipleSelect({ options, selectedList, onChangeSelected
         onChangeSelectedList(copy)
     }
 
-    const handleSelectAll = (type=null) => {
+    const handleSelectAll = (type = null) => {
         if (type === 'all') {
             onChangeSelectedList(options.map((option) => option.value))
         }
@@ -42,8 +40,41 @@ export default function MultipleSelect({ options, selectedList, onChangeSelected
         }
     }
 
-    const getFilteredOptions = () => {
-        return options.filter((option) => option.label.toLowerCase().includes(search.toLowerCase()))
+    const getFilteredOptionsTemplate = () => {
+        const filtered = options.filter((option) => option.label.toLowerCase().includes(search.toLowerCase()))
+
+        if (filtered.length === 0) {
+            return (
+                <div className="text-center text-sm">
+                    No options found
+                </div>
+            )
+        }
+        else {
+            return filtered.map((option, index) => {
+                return (
+                    <Item
+                        key={index}
+                        label={option.label}
+                        value={option.value}
+                        checked={selectedList.includes(option.value)}
+                        onChecked={handleSelect}
+                    />
+                )
+            })
+        }
+    }
+
+    const selectedItemsTemplate = () => {
+        if (selectedList.length === 0) {
+            return "Select an option"
+        }
+        else if (selectedList.length === 1) {
+            return options.find((option) => option.value === selectedList[0]).label
+        }
+        else {
+            return `${selectedList.length} items selected`
+        }
     }
 
     return (
@@ -52,14 +83,18 @@ export default function MultipleSelect({ options, selectedList, onChangeSelected
                 <PopoverTrigger asChild>
                     <Button variant="outline" onClick={() => setOpen(true)} className="font-normal flex justify-between items-center min-w-[20rem]">
                         <span>
-
-                            {
-                                selectedList.length === 0 ? 'Select an option' :
-                                    selectedList.length === 1 ? options.find((option) => option.value === selectedList[0]).label :
-                                        `${selectedList.length} items selected`
-                            }
+                            {selectedItemsTemplate()}
                         </span>
-                        <ChevronDown className="h-4 w-4 opacity-50" />
+                        <div className="flex gap-2">
+                            {selectedList.length > 0 && (
+                                <X className="h-4 w-4 opacity-50" onClick={(e) => {
+                                    e.stopPropagation()
+                                    onChangeSelectedList([])
+                                }}
+                                />
+                            )}
+                            <ChevronDown className="h-4 w-4 opacity-50" />
+                        </div>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="p-2 w-[20rem]">
@@ -69,18 +104,9 @@ export default function MultipleSelect({ options, selectedList, onChangeSelected
                         onChangeSearch={setSearch}
                         onChangeSelectAll={handleSelectAll}
                     />
-                    <ScrollArea className="h-[10rem]">
-                        {getFilteredOptions().map((option, index) => {
-                            return (
-                                <Item
-                                    key={index}
-                                    label={option.label}
-                                    value={option.value}
-                                    checked={selectedList.includes(option.value)}
-                                    onChecked={handleSelect}
-                                />
-                            )
-                        })}
+
+                    <ScrollArea className="max-h-[10rem]">
+                        {getFilteredOptionsTemplate()}
                     </ScrollArea>
                 </PopoverContent>
             </Popover>
