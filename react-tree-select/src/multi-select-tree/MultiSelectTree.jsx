@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, X } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 import {
@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-import {TreeItem} from "./TreeItem"
+import { TreeItem } from "./TreeItem"
 
 export default function MultipleSelectTree({ options, selectedList, onChangeSelectedList }) {
     const [open, setOpen] = useState(false)
@@ -26,7 +26,20 @@ export default function MultipleSelectTree({ options, selectedList, onChangeSele
                                     `${selectedList?.length} items selected`
                             }
                         </span>
-                        <ChevronDown className="h-4 w-4 opacity-50" />
+                        <div className="flex gap-2 items-center">
+                            {
+                                selectedList?.length > 0 && (
+                                    <X
+                                        className="h-4 w-4 opacity-50 cursor-pointer"
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            onChangeSelectedList([])
+                                        }}
+                                    />
+                                )
+                            }
+                            <ChevronDown className="h-4 w-4 opacity-50" />
+                        </div>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="p-2 w-[20rem]">
